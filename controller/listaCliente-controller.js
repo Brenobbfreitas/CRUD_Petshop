@@ -1,7 +1,7 @@
 import { clienteService } from "../service/cliente-service.js";
 
 // ta criando o template
-const criarNovaLinha = (nome, email) => {
+const criarNovaLinha = (nome, email, id) => {
   // cria a linha do elemento
   const linhaNovoCliente = document.createElement('tr');
   const conteudo = `
@@ -16,15 +16,31 @@ const criarNovaLinha = (nome, email) => {
           `;
   //
   linhaNovoCliente.innerHTML = conteudo;
+  linhaNovoCliente.dataset.id = id;
   return linhaNovoCliente;
 };
 
 // vai percorrer a arvore do dom e pegar o corpo da tabela
 const tabela = document.querySelector("[data-tabela]")
 
+
+// excluindo pelo id
+tabela.addEventListener('click', (evento)=>{
+  evento.target == 'botao-simples botao-simples--excluir'
+  if(ehBotaoDeletar){
+    const linhaCliente = evento.target.closest('[data-id]')
+    let id = linhaCliente.dataset.id
+    clienteService.removeCliente(id)
+    .then( ()=>{
+      linhaCliente.remove()
+    })
+  }
+
+})
+
 // pegando os dados, fazendo um loop e interando na tela
 clienteService.listaCliente()
 .then(data => {
     data.forEach(elemento => {
-    tabela.appendChild(criarNovaLinha(elemento.nome, elemento.email))
+    tabela.appendChild(criarNovaLinha(elemento.nome, elemento.email, elemento.id))
 })})
