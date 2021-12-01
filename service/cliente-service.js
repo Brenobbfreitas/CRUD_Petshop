@@ -29,11 +29,27 @@ const removeCliente = (id) =>{
   })
 }
 
-const detalhaCliente = (id) =>{
+const detalhaCliente = (id) => {
   return fetch(`http://localhost:3000/profile/${id}`)
-  .then(resposta => {
-    return resposta.json();
+      .then(resposta => {
+          return resposta.json()
     // utilizar o json para converter a resposta para JS
+  })
+}
+
+const atualizaCliente = (id, nome, email) =>{
+  return fetch(`http://localhost:3000/profile/${id}`, {
+    method: 'PUT',
+    headers:{
+      'Content-type' : 'application/json'
+    },
+    body: JSON.stringify({
+      nome: nome,
+      email: email
+    })
+  })
+  .then(resposta => {
+    return resposta.json
   })
 }
 
@@ -42,5 +58,6 @@ export const clienteService = {
     listaCliente,
     criaCliente,
     removeCliente,
-    detalhaCliente
+    detalhaCliente,
+    atualizaCliente
 }

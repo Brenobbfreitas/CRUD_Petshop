@@ -25,32 +25,24 @@ const tabela = document.querySelector("[data-tabela]");
 
 // excluindo pelo id
 tabela.addEventListener("click", (evento) => {
-  let ehBotaoDeletar =
-    evento.target.className == "botao-simples botao-simples--excluir";
+  let ehBotaoDeletar = evento.target.className === "botao-simples botao-simples--excluir";
   if (ehBotaoDeletar) {
     const linhaCliente = evento.target.closest("[data-id]");
     let id = linhaCliente.dataset.id;
-    clienteService.removeCliente(id).then(() => {
-      linhaCliente.remove();
-    });
-  }
-});
+    clienteService.removeCliente(id)
+      .then(() => {
+         linhaCliente.remove();
+    })
 
-//Editar pelo ID
-tabela.addEventListener("click", (evento) => {
-  let ehBotaoEditar = 
-    evento.target.className == "botao-simples botao-simples--editar";
-  if(ehBotaoEditar){
-    const
   }
 })
 
 
+
 // pegando os dados, fazendo um loop e interando na tela
-clienteService.listaCliente().then((data) => {
+clienteService.listaCliente()
+.then((data) => {
   data.forEach((elemento) => {
-    tabela.appendChild(
-      criarNovaLinha(elemento.nome, elemento.email, elemento.id)
-    );
-  });
-});
+    tabela.appendChild(criarNovaLinha(elemento.nome, elemento.email, elemento.id))
+  })
+})
