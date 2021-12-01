@@ -3,7 +3,7 @@ import { clienteService } from "../service/cliente-service.js";
 // ta criando o template
 const criarNovaLinha = (nome, email, id) => {
   // cria a linha do elemento
-  const linhaNovoCliente = document.createElement('tr');
+  const linhaNovoCliente = document.createElement("tr");
   const conteudo = `
               <td class="td" data-td>${nome}</td>
                <td>${email}</td>
@@ -21,26 +21,36 @@ const criarNovaLinha = (nome, email, id) => {
 };
 
 // vai percorrer a arvore do dom e pegar o corpo da tabela
-const tabela = document.querySelector("[data-tabela]")
-
+const tabela = document.querySelector("[data-tabela]");
 
 // excluindo pelo id
-tabela.addEventListener('click', (evento)=>{
-  let ehBotaoDeletar = evento.target.className == 'botao-simples botao-simples--excluir'
-  if(ehBotaoDeletar){
-    const linhaCliente = evento.target.closest('[data-id]')
-    let id = linhaCliente.dataset.id
-    clienteService.removeCliente(id)
-    .then( ()=>{
-      linhaCliente.remove()
-    })
+tabela.addEventListener("click", (evento) => {
+  let ehBotaoDeletar =
+    evento.target.className == "botao-simples botao-simples--excluir";
+  if (ehBotaoDeletar) {
+    const linhaCliente = evento.target.closest("[data-id]");
+    let id = linhaCliente.dataset.id;
+    clienteService.removeCliente(id).then(() => {
+      linhaCliente.remove();
+    });
   }
+});
 
+//Editar pelo ID
+tabela.addEventListener("click", (evento) => {
+  let ehBotaoEditar = 
+    evento.target.className == "botao-simples botao-simples--editar";
+  if(ehBotaoEditar){
+    const
+  }
 })
 
+
 // pegando os dados, fazendo um loop e interando na tela
-clienteService.listaCliente()
-.then(data => {
-    data.forEach(elemento => {
-    tabela.appendChild(criarNovaLinha(elemento.nome, elemento.email, elemento.id))
-})})
+clienteService.listaCliente().then((data) => {
+  data.forEach((elemento) => {
+    tabela.appendChild(
+      criarNovaLinha(elemento.nome, elemento.email, elemento.id)
+    );
+  });
+});
